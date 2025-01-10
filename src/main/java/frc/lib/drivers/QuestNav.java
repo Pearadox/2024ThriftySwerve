@@ -72,6 +72,7 @@ public class QuestNav {
         Logger.recordOutput("QuestNav/Frame Count", questFrameCount.get());
         Logger.recordOutput("QuestNav/Timestamp", questTimestamp.get());
         Logger.recordOutput("QuestNav/Raw Position", questPosition.get());
+        Logger.recordOutput("QuestNav/Offset", getOffset());
         Logger.recordOutput("QuestNav/Quaternion", getQuaternion());
         Logger.recordOutput("QuestNav/Battery", questBattery.get()); 
         Logger.recordOutput("QuestNav/Connected", isConnected()); 
@@ -128,6 +129,10 @@ public class QuestNav {
 
     public static Pose2d getRobotPose() {
         return getQuestNavPose().transformBy(ROBOT_TO_QUEST.inverse());
+    }
+
+    public static Transform2d getOffset() {
+        return new Transform2d(questTranslationOffset, Rotation2d.fromDegrees(yawOffset));
     }
 
     public static Quaternion getQuaternion() {
