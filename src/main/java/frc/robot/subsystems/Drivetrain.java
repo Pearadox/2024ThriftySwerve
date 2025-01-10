@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
+import frc.lib.drivers.QuestNav;
 import frc.robot.Constants.SwerveConstants;
 
 public class Drivetrain extends SubsystemBase {
@@ -92,6 +93,8 @@ public class Drivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
     updateOdometry();
 
+    QuestNav.periodic();
+
     SmartDashboard.putNumber("Robot Angle", getHeading());
     SmartDashboard.putString("Pose", getPose().toString());
 
@@ -136,6 +139,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void resetOdometry(Pose2d pose){
     poseEstimator.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
+    QuestNav.resetQuestPose(pose);
   }
 
   public void updateOdometry() {
@@ -166,6 +170,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void zeroHeading(){
     gyro.reset();
+    QuestNav.resetHeading(0.0);
   }
 
   public double getHeading(){
